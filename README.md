@@ -13,6 +13,16 @@ uv sync
 uv run python main.py
 ```
 
+Run the attention examples from the project root:
+
+```sh
+uv run python -m examples.causal_attention
+uv run python -m examples.multi_head_attention
+```
+
+The multi-head example prints each calculation, its tensor shape, and how the
+causal mask keeps future tokens from affecting earlier outputs.
+
 ## Dataset
 
 The sample text is *Alice's Adventures in Wonderland* by Lewis Carroll, sourced
