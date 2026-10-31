@@ -2,11 +2,11 @@
 
 from pathlib import Path
 
-from data_loader import create_dataloader
+from llm.data_loader import create_dataloader
 
 
 def main():
-    text_path = Path(__file__).resolve().parent / "data" / "input.txt"
+    text_path = Path(__file__).resolve().parents[1] / "data" / "input.txt"
     raw_text = text_path.read_text(encoding="utf-8")
     print("Total number of characters:", len(raw_text))
 

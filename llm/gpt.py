@@ -3,7 +3,7 @@ from typing import TypedDict
 import torch
 import torch.nn as nn
 
-from attention import MultiHeadAttention
+from llm.attention import MultiHeadAttention
 
 class GPTConfig(TypedDict):
     vocab_size: int
@@ -120,3 +120,28 @@ class TransformerBlock(nn.Module):
         x = x + shortcut  # Add the original input back
 
         return x
+
+
+def generate_text_simple(model, idx, max_new_tokens, context_size):
+    for _ in range(max_new_tokens):
+
+        # Crop current context if it exceeds the supported context size
+        # E.g., if LLM supports only 5 tokens, and the context size is 10
+        # then only the last 5 tokens are used as context
+        idx_cond = idx[:, -context_size:]
+
+        with torch.no_grad():
+            logits = model(idx_cond)
+
+        # Focus only on the last time step
+        # (batch, n_tokens, vocab_size) becomes (batch, vocab_size)
+        logits = logits[:, -1, :]
+
+        probas = torch.softmax(logits, dim=-1)
+
+        # Get the idx of the vocab entry with the highest probability value
+        idx_next = torch.argmax(probas, dim=-1, keepdim=True)  # (batch, 1)
+
+        idx = torch.cat((idx, idx_next), dim=1)
+
+    return idx

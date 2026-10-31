@@ -2,7 +2,7 @@ import argparse
 
 import torch
 
-from attention import MultiHeadAttention
+from llm.attention import MultiHeadAttention
 
 
 def show(label, tensor):

@@ -1,6 +1,6 @@
 import torch
 
-from attention import CausalAttention
+from llm.attention import CausalAttention
 
 
 def main():

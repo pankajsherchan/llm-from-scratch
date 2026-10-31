@@ -1,14 +1,14 @@
 import tiktoken
 import torch
 
-from gpt import GPT_CONFIG_124M, GPTConfig, GPTModel
+from llm.gpt import GPT_CONFIG_124M, GPTConfig, GPTModel
 
 
 @torch.no_grad()
 def main():
     torch.manual_seed(123)
     tokenizer = tiktoken.get_encoding("gpt2")
-    texts = ["Every effort moves you", "Every day holds a"]
+    texts = ["The river flows past", "A robot learns to"]
     # Both prompts have four tokens, so no padding is needed.
     batch = torch.tensor([tokenizer.encode(text) for text in texts])
 
